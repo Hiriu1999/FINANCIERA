@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>Registrar cobro</h3>
+<p class="text-muted">Puedes registrar cobros con fecha actualizable (hoy o fecha retroactiva).</p>
+<form method="post" class="row g-3">
+  <div class="col-md-6"><label class="form-label">Préstamo activo</label>
+    <select class="form-select" name="loan_id" required>
+      <option value="">Seleccionar...</option>
+      {% for loan in loans %}
+      <option value="{{ loan.id }}">{{ loan.customer }} (Saldo S/ {{ loan.balance }})</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-3"><label class="form-label">Monto</label><input class="form-control" name="amount" step="0.01" type="number" required></div>
+  <div class="col-md-3"><label class="form-label">Fecha de cobro</label><input class="form-control" name="payment_date" type="date" value="{{ today }}" required></div>
+  <div class="col-12"><label class="form-label">Notas</label><input class="form-control" name="notes"></div>
+  <div class="col-12"><button class="btn btn-success">Registrar</button></div>
+</form>
+{% endblock %}
