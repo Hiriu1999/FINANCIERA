@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-3">Dashboard Financiero</h2>
+<div class="row g-3 mb-4">
+  <div class="col-md-3"><div class="card kpi"><div class="card-body"><small>Total prestado</small><h4>S/ {{ kpis.total_lent }}</h4></div></div></div>
+  <div class="col-md-3"><div class="card kpi"><div class="card-body"><small>Recaudado hoy</small><h4>S/ {{ kpis.collected_today }}</h4></div></div></div>
+  <div class="col-md-3"><div class="card kpi"><div class="card-body"><small>Ganancia proyectada</small><h4>S/ {{ kpis.projected_profit }}</h4></div></div></div>
+  <div class="col-md-3"><div class="card kpi"><div class="card-body"><small>Capital disponible</small><h4>S/ {{ kpis.available_capital }}</h4></div></div></div>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-8">
+    <div class="card">
+      <div class="card-body">
+        <h5>Préstamos</h5>
+        <div class="table-responsive">
+          <table class="table table-sm align-middle">
+            <thead><tr><th>ID</th><th>Cliente</th><th>Total</th><th>Pagado</th><th>Saldo</th><th>Vence</th><th>Estado</th></tr></thead>
+            <tbody>
+              {% for loan in loans %}
+              <tr>
+                <td>{{ loan.id }}</td><td>{{ loan.customer }}</td><td>{{ loan.total_due }}</td><td>{{ loan.paid_total }}</td><td>{{ loan.balance }}</td><td>{{ loan.due_date }}</td>
+                <td><span class="badge bg-{% if loan.status=='pagado' %}success{% elif loan.status=='en_mora' %}danger{% else %}warning{% endif %}">{{ loan.status }}</span></td>
+              </tr>
+              {% else %}
+              <tr><td colspan="7" class="text-muted">Sin préstamos registrados.</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card mb-3"><div class="card-body"><h6>Estado de cartera</h6><ul class="mb-0"><li>Activos: {{ status_count.activo }}</li><li>Pagados: {{ status_count.pagado }}</li><li>En mora: {{ status_count.en_mora }}</li></ul></div></div>
+    <div class="card"><div class="card-body"><h6>Socios</h6><ul class="mb-0">{% for inv in investors %}<li>{{ inv.name }}: S/ {{ inv.capital }}</li>{% endfor %}</ul></div></div>
+  </div>
+</div>
+{% endblock %}

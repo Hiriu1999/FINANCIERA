@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>Socios e inversiones</h3>
+<div class="row g-4">
+  <div class="col-md-6">
+    <div class="card"><div class="card-body">
+      <form method="post" class="row g-2">
+        <div class="col-7"><label class="form-label">Socio</label><input class="form-control" name="name" required></div>
+        <div class="col-5"><label class="form-label">Capital</label><input class="form-control" type="number" name="capital" step="0.01" required></div>
+        <div class="col-12"><button class="btn btn-primary">Actualizar capital</button></div>
+      </form>
+    </div></div>
+  </div>
+  <div class="col-md-6">
+    <div class="card"><div class="card-body">
+      <h6>Capital actual</h6>
+      <ul class="mb-0">
+        {% for inv in investors %}<li>{{ inv.name }}: S/ {{ inv.capital }}</li>{% endfor %}
+      </ul>
+    </div></div>
+  </div>
+</div>
+{% endblock %}
